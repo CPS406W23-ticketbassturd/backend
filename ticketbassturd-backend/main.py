@@ -12,6 +12,6 @@ def_read_root():
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
-@app.get("/testing2")
+@app.get("/testing")
 def read_test():
-        return {"testing2": "success"}
+        return {"testing": "success"}

@@ -64,6 +64,6 @@ class User:
             confirm_password = input("Confirm your new password: ")
             if new_password == confirm_password:
                 correct_password = new_password
-
+                self.passhash = new_password
     
     

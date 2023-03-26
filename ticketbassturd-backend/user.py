@@ -1,5 +1,5 @@
 class User:
-    def __init__(self, id, first_name, last_name, email, phone_num, passhash):
+    def __init__(self, id, first_name, last_name, email, phone_num, pass):
         """
         Construct filled user object, this should only be directly called when creating a new user account
 
@@ -14,7 +14,7 @@ class User:
         self.last_name = last_name
         self.email = email
         self.phone_num = phone_num
-        self.passhash = passhash
+        self.pass = pass
         #TODO: Generate ID Based on global ID function
 
     # FROM ID LOADS USER IN DB INTO WORKING MEMORY FOR CHANGES AND ACCESSING

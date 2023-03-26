@@ -99,7 +99,15 @@ def search_events(query: str):
 
 @app.get("/api/login/{email}/{password}")
 def login(email: str, password: str):
-    # query internal method and return the list of events objects that match search
+    # query internal to verify login, return true/false based on internal method
+
+    # example return
+    return {"success": True}
+
+
+@app.get("/api/create_account/{email}/{password}/{first_name}/{last_name}/{phone}")
+def create_account(email: str, password: str, first_name: str, last_name: str, phone: int):
+    # query internal method to creating account, return true/false based on internal method
 
     # example return
     return {"success": True}

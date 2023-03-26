@@ -1,5 +1,5 @@
 class User:
-    def __init__(self, id, first_name, last_name, email, phone_num, pass):
+    def __init__(self, id, first_name, last_name, email, phone_num, passhash):
         """
         Construct filled user object, this should only be directly called when creating a new user account
 
@@ -14,7 +14,7 @@ class User:
         self.last_name = last_name
         self.email = email
         self.phone_num = phone_num
-        self.pass = pass
+        self.passhash = passhash
         #TODO: Generate ID Based on global ID function
 
     # FROM ID LOADS USER IN DB INTO WORKING MEMORY FOR CHANGES AND ACCESSING
@@ -35,12 +35,27 @@ class User:
         # TODO: Store user somehow (magic)
         return True
     
-    
-    
+    def change_first_name(first_name)
+        new_first_name = input("Enter your new first name: ")
+                self.first_name = new_first_name
+                    return True
+            
+    def change_last_name(last_name)
+         new_last_name = input("Enter your new last name: ")
+                self.last_name = new_last_name
+                    return True
+            
+    def change_email(email)
+        new_email = input("Enter your new email: ") 
+                self.email = new_email
+                    return True
+    def change_phone_num(phone_num)
+        new_phone_num = input("Enter your new phone number: ")
+                self.phone_num = new_phone_num
+                    return True
+            
     def change_password(passhash):
-    correct_password = passhash
-    user_password = input("Please enter your password: ")
-
+ 
     if user_password == correct_password:
         print("Your password is correct.")
 
@@ -56,34 +71,4 @@ class User:
     else:
         print("Your password is incorrect.")
     
-    def change_password(self):
-        self.password = change_password(self.password)
-
-    def change_user_info(self): 
-        password_input = input("Enter your password to change user info: ")
-
-        if password_input == self.password:
-      
-            print("What would you like to change?")
-            print("1. First name")
-            print("2. Last name")
-            print("3. Email")
-            print("4. Phone number")
-            choice = input("Enter your choice (1-4): ")
-
-            if choice == "1":
-                new_first_name = input("Enter your new first name: ")
-                self.first_name = new_first_name
-            elif choice == "2":
-                new_last_name = input("Enter your new last name: ")
-                self.last_name = new_last_name
-            elif choice == "3":
-                new_email = input("Enter your new email: ") 
-                self.email = new_email
-            elif choice == "4":
-                new_phone_num = input("Enter your new phone number: ")
-                self.phone_num = new_phone_num
-            else:
-                print("Invalid choice. Please try again.")
-        else:
-            print("Incorrect password. Please try again.")
+    

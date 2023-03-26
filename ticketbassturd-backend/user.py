@@ -55,20 +55,14 @@ class User:
                     return True
             
     def change_password(passhash):
- 
+    correct_password = passhash
     if user_password == correct_password:
-        print("Your password is correct.")
-
         change_password = input("Would you like to change your password? (Yes = 1 or No = 2): ")
         if change_password == 1:
             new_password = input("Enter your new password: ")
             confirm_password = input("Confirm your new password: ")
             if new_password == confirm_password:
                 correct_password = new_password
-                print("Your password has been changed successfully.")
-            else:
-                print("Passwords do not match.")
-    else:
-        print("Your password is incorrect.")
+
     
     

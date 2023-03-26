@@ -49,6 +49,7 @@ class User:
         new_email = input("Enter your new email: ") 
                 self.email = new_email
                     return True
+            
     def change_phone_num(phone_num)
         new_phone_num = input("Enter your new phone number: ")
                 self.phone_num = new_phone_num

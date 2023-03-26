@@ -34,3 +34,56 @@ class User:
     def save_account(self):
         # TODO: Store user somehow (magic)
         return True
+    
+    
+    
+    def change_password(passhash):
+    correct_password = passhash
+    user_password = input("Please enter your password: ")
+
+    if user_password == correct_password:
+        print("Your password is correct.")
+
+        change_password = input("Would you like to change your password? (Yes = 1 or No = 2): ")
+        if change_password == 1:
+            new_password = input("Enter your new password: ")
+            confirm_password = input("Confirm your new password: ")
+            if new_password == confirm_password:
+                correct_password = new_password
+                print("Your password has been changed successfully.")
+            else:
+                print("Passwords do not match.")
+    else:
+        print("Your password is incorrect.")
+    
+    def change_password(self):
+        self.password = change_password(self.password)
+
+    def change_user_info(self): 
+        password_input = input("Enter your password to change user info: ")
+
+        if password_input == self.password:
+      
+            print("What would you like to change?")
+            print("1. First name")
+            print("2. Last name")
+            print("3. Email")
+            print("4. Phone number")
+            choice = input("Enter your choice (1-4): ")
+
+            if choice == "1":
+                new_first_name = input("Enter your new first name: ")
+                self.first_name = new_first_name
+            elif choice == "2":
+                new_last_name = input("Enter your new last name: ")
+                self.last_name = new_last_name
+            elif choice == "3":
+                new_email = input("Enter your new email: ") 
+                self.email = new_email
+            elif choice == "4":
+                new_phone_num = input("Enter your new phone number: ")
+                self.phone_num = new_phone_num
+            else:
+                print("Invalid choice. Please try again.")
+        else:
+            print("Incorrect password. Please try again.")

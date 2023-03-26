@@ -36,22 +36,22 @@ class User:
         return True
     
     def change_first_name(first_name)
-        new_first_name = input("Enter your new first name: ")
+        new_first_name = input("Enter first name: ")
         self.first_name = new_first_name
         return True
             
     def change_last_name(last_name)
-         new_last_name = input("Enter your new last name: ")
+         new_last_name = input("Enter last name: ")
          self.last_name = new_last_name
          return True
             
     def change_email(email)
-        new_email = input("Enter your new email: ") 
+        new_email = input("Enter email: ") 
         self.email = new_email
         return True
             
     def change_phone_num(phone_num)
-        new_phone_num = input("Enter your new phone number: ")
+        new_phone_num = input("Enter phone number: ")
         self.phone_num = new_phone_num
         return True
             

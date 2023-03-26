@@ -78,6 +78,7 @@ def search_events(query: str):
                     "date": 1679851845,
                     "min_age": 19,
                     "venue": "weteg-12323-sfsdfdsf",
+                    "host_id": "sdfsf3-234223434-sdfs"
                 },
                 {
                     "event_id": "jkhklklj-234-dsfdfss",
@@ -85,6 +86,7 @@ def search_events(query: str):
                     "date": 1685136645,
                     "min_age": 0,
                     "venue": "wsdx-22421-fbxsb",
+                    "host_id": "sdfsf3-234223434-sdfs"
                 },
                 {
                     "event_id": "jkhklkl-2343-sf",
@@ -92,8 +94,8 @@ def search_events(query: str):
                     "date": 1685136645,
                     "min_age": 21,
                     "venue": "sdfsf-234223434-ss",
-                },
-
+                    "host_id": "sdfsf3-234223434-sdfs"
+                }
             ]}
 
 
@@ -120,7 +122,7 @@ def payment(user_id: str, event_id: str, numOfTickets: int, card_num: int, card_
     return {"success": True}
 
 @app.get("/api/tickets/{user_id}")
-def order_history(user_id: int):
+def order_history(user_id: str):
     # query internal method of ticket history for the user id, return the ticket list of the user
 
     # example return
@@ -144,7 +146,7 @@ def order_history(user_id: int):
             ]}
 
 @app.get("/api/update/account/{user_id}/{email}/{password}/{first_name}/{last_name}/{phone}")
-def update_account(user_id: int, email: str, password: str, first_name: str, last_name: str, phone: int):
+def update_account(user_id: str, email: str, password: str, first_name: str, last_name: str, phone: int):
     # handle logic internally for what needs to get updated
 
     # update info
@@ -154,5 +156,58 @@ def update_account(user_id: int, email: str, password: str, first_name: str, las
     # example return
     return {"success": True}
 
+
+@app.get("/api/get/user/{user_id}")
+def get_user(user_id: str):
+    # query internal method to grab object and then return it
+
+    # example return
+    return {
+        "user_id": "sdfsf3-234223434-sdfs",
+        "first_name": "Jimmy",
+        "last_name": "Carter",
+        "email": "jimmy.carter@gmail.com",
+        "password": "123password",
+        "phone": 23442344
+            }
+
+@app.get("/api/get/venue/{venue_id}")
+def get_user(venue_id: str):
+    # query internal method to grab object and then return it
+
+    # example return
+    return {
+        "venue_id": "sdfsf-234223434-ss",
+        "name": "Venue 1",
+        "address": "123 Sesame Street",
+        "max_capacity": "2500",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    }
+
+@app.get("/api/get/event/{event_id}")
+def get_user(event_id: str):
+    # query internal method to grab object and then return it
+
+    # example return
+    return {
+        "event_id": "kjklj-897897-werjkl",
+        "name": "greatest even eber lol",
+        "date": 1679851845,
+        "min_age": 19,
+        "venue": "weteg-12323-sfsdfdsf",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?,",
+        "host_id": "sdfsf3-234223434-sdfs"
+    }
+
+@app.get("/api/get/ticket/{ticket_id}")
+def get_user(ticket_id: str):
+    # query internal method to grab object and then return it
+
+    # example return
+    return {
+        "ticket_id": "cc2a97a8-3424-ssss-9101-46828413f89a",
+        "event_id": "jkhklklj-234-dsfdfss",
+        "price": 22.23
+    }
 
 

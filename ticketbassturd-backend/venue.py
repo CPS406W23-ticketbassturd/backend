@@ -8,5 +8,5 @@ class Venue:
 
     @classmethod
     def from_id(cls, venue_id):
-        #TODO: get venue data from ID
+        # TODO: Generate venue from query w/ ID
         return Venue(venue_id, None, None, None, None)

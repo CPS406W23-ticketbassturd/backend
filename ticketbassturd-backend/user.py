@@ -37,23 +37,23 @@ class User:
     
     def change_first_name(first_name)
         new_first_name = input("Enter your new first name: ")
-                self.first_name = new_first_name
-                    return True
+        self.first_name = new_first_name
+        return True
             
     def change_last_name(last_name)
          new_last_name = input("Enter your new last name: ")
-                self.last_name = new_last_name
-                    return True
+         self.last_name = new_last_name
+         return True
             
     def change_email(email)
         new_email = input("Enter your new email: ") 
-                self.email = new_email
-                    return True
+        self.email = new_email
+        return True
             
     def change_phone_num(phone_num)
         new_phone_num = input("Enter your new phone number: ")
-                self.phone_num = new_phone_num
-                    return True
+        self.phone_num = new_phone_num
+        return True
             
     def change_password(passhash):
     correct_password = passhash

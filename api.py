@@ -111,3 +111,10 @@ def create_account(email: str, password: str, first_name: str, last_name: str, p
 
     # example return
     return {"success": True}
+
+@app.get("/api/payment/{user_id}/{event_id}/{numOfTickets}/{card_num}/{card_cvv}/{card_name}/{card_expMonth}/{card_expYear}")
+def payment(user_id: str, event_id: str, numOfTickets: int, card_num: int, card_cvv: int, card_name: str, card_expMonth: int, card_expYear: int):
+    # query internal payment method, return true/false based on internal method
+
+    # example return
+    return {"success": True}

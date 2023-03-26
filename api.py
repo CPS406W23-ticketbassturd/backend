@@ -95,3 +95,11 @@ def search_events(query: str):
                 },
 
             ]}
+
+
+@app.get("/api/login/{email}/{password}")
+def login(email: str, password: str):
+    # query internal method and return the list of events objects that match search
+
+    # example return
+    return {"success": True}

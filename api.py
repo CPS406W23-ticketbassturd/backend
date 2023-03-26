@@ -142,3 +142,17 @@ def order_history(user_id: int):
                     "price": 22.23
                 }
             ]}
+
+@app.get("/api/update/account/{user_id}/{email}/{password}/{first_name}/{last_name}/{phone}")
+def update_account(user_id: int, email: str, password: str, first_name: str, last_name: str, phone: int):
+    # handle logic internally for what needs to get updated
+
+    # update info
+
+    # if all true return success
+
+    # example return
+    return {"success": True}
+
+
+

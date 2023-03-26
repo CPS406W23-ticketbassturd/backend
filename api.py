@@ -118,3 +118,27 @@ def payment(user_id: str, event_id: str, numOfTickets: int, card_num: int, card_
 
     # example return
     return {"success": True}
+
+@app.get("/api/tickets/{user_id}")
+def order_history(user_id: int):
+    # query internal method of ticket history for the user id, return the ticket list of the user
+
+    # example return
+    return {"user_id": user_id,
+            "tickets": [
+                {
+                    "ticket_id": "cc2a97a8-7876-477b-9101-46828413f89a",
+                    "event_id": "jkhklklj-234-dsfdfss",
+                    "price": 234.23
+                },
+                {
+                    "ticket_id": "234dfdsf-7876-477b-9101-fsfddsdff",
+                    "event_id": "jkhklkl-2343-sf",
+                    "price": 23.23
+                },
+                {
+                    "ticket_id": "cc2a97a8-3424-ssss-9101-46828413f89a",
+                    "event_id": "jkhklklj-234-dsfdfss",
+                    "price": 22.23
+                }
+            ]}

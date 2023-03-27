@@ -2,7 +2,7 @@ from venue import Venue
 from csv_reader import csvReader
 from datetime import datetime
 
-event_csv = csvReader('events.csv')
+event_csv = csvReader('DB/events.csv')
 
 class Event:
     """

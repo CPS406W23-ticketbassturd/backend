@@ -1,5 +1,4 @@
 import csv
-from Event_DB import Events
 from datetime import date
 
 class Ticket:
@@ -22,17 +21,17 @@ class Ticket:
     # takes a Ticket object and appends it to the tickets.csv file
     @classmethod
     def add_ticket(cls, ticket):
-        with open('tickets.csv', mode='a', newline='') as file:
+        with open('DB/tickets.csv', mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([ticket.ticket_id, ticket.event.event_id, ticket.price, ticket.date.strftime('%Y-%m-%d')])
     
     # takes a ticket_id and deletes the corresponding row from the tickets.csv file
     @classmethod
     def delete_ticket(cls, ticket_id):
-        with open('tickets.csv', mode='r') as file:
+        with open('DB/tickets.csv', mode='r') as file:
             reader = csv.reader(file)
             rows = [row for row in reader if row[0] != ticket_id]
-        with open('tickets.csv', mode='w', newline='') as file:
+        with open('DB/tickets.csv', mode='w', newline='') as file:
             writer = csv.writer(file)
             for row in rows:
                 writer.writerow(row)
@@ -40,7 +39,7 @@ class Ticket:
     # takes an Event object and returns a list of Ticket objects for that event by reading the tickets.csv file and filtering rows based on the event id
     @classmethod
     def get_tickets_for_event(cls, event):
-        with open('tickets.csv', mode='r') as file:
+        with open('DB/tickets.csv', mode='r') as file:
             reader = csv.reader(file)
             tickets = []
             for row in reader:

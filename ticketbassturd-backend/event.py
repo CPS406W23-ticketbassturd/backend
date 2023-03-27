@@ -42,11 +42,13 @@ class Event:
         # Make sure all arguments can be converted without errors
         try:
             mem_date = datetime.strptime(db_event.date, '%m/%d/%Y')
+            mem_min_age = int(db_event.min_age)
+            mem_num_attendees = int(db_event.num_attendees)
         except ValueError:
             return None
 
         return Event(event_id, db_event.name, db_event.description,
-                     mem_date, mem_venue, db_event.min_age, db_event.num_attendees)
+                     mem_date, mem_venue, mem_min_age, mem_num_attendees)
 
     def to_db_event(self):
         """
@@ -120,6 +122,8 @@ class DB_Event:
                     None, if ID invalid
         """
         found_event = event_csv.find_id_match(event_id)
+        if not found_event:
+            return None
         return DB_Event(found_event)
 
     @classmethod

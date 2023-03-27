@@ -1,1 +1,2 @@
-account_id, name, description, num_attendees, date, venue_id
+TEST_EVE_ID_1,TEST_VEN_ID_1,TESTEV_100,TESTDESC,03/26/2023,10,0
+TEST_EVE_ID_20,TEST_VEN_ID_1,TESTEV_100,TESTDESC,03/26/2023,10,10

@@ -1,6 +1,6 @@
 from csv_reader import csvReader
 
-venue_csv = csvReader('DB/venue.csv')
+venue_csv = csvReader('DB/venues.csv')
 
 class Venue:
     def __init__(self, venue_id, name, description, address, max_capacity):

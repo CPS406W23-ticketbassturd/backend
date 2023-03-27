@@ -118,3 +118,10 @@ class DB_Ticket:
         :return:
         """
         ticket_csv.write_entry_id_match(self.ticket_id, self.query)
+
+    def to_dict(self):
+        return {
+            "ticket_id": self.ticket_id,
+            "event_id": self.event_id,
+            "price": self.price
+        }

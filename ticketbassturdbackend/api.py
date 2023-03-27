@@ -1,102 +1,58 @@
-from typing import Union
 
+
+from typing import Union
 from fastapi import FastAPI
 
+from payment import Payment
+from venue import Venue
+from event import Event
+from ticket import Ticket
+from user import User
+
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/api/search/users/{query}")
 def search_users(query: str):
     # query internal method and return the list of user objects that match search
 
-    # example return
-    return {"query": query,
-            "result": [
-                {
-                    "user_id": "askldfjsdljsdf-234234-sdfsdf",
-                    "first_name": "John",
-                    "last_name": "Doe",
-                    "email": "john.doe@gmail.com",
-                },
-                {
-                    "user_id": "dfsafdsfsf-232-sdfsdf",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "email": "jane.doe@gmail.com",
-                },
-                {
-                    "user_id": "sdfsf3-234223434-sdfs",
-                    "first_name": "Jimmy",
-                    "last_name": "Carter",
-                    "email": "jimmy.carter@gmail.com",
-                },
-                {
-                    "user_id": "sdf3243-234-sdfssssdf",
-                    "first_name": "Jonny",
-                    "last_name": "Dephh",
-                    "email": "jonny.dephh@gmail.com",
-                }
-            ]}
+    return {
+        "query": query,
+        "result": User.match_first_name(query)
+    }
 
 @app.get("/api/search/venues/{query}")
 def search_venues(query: str):
     # query internal method and return the list of venue objects that match search
 
-    # example return
-    return {"query": query,
-            "result": [
-                {
-                    "venue_id": "sdfsf-234223434-ss",
-                    "name": "Venue 1",
-                    "address": "123 Sesame Street",
-                    "max_capacity": "2500"
-                },
-                {
-                    "venue_id": "weteg-12323-sfsdfdsf",
-                    "name": "Venue 2",
-                    "address": "12345 Sesame Street",
-                    "max_capacity": "30"
-                },
-                {
-                    "venue_id": "wsdx-22421-fbxsb",
-                    "name": "Venue 3",
-                    "address": "@Drakes house lol",
-                    "max_capacity": "23047324809230984"
-                }
-            ]}
+    return {
+        "query": query,
+        "result": Venue.match_name(query)
+    }
 
 @app.get("/api/search/events/{query}")
 def search_events(query: str):
     # query internal method and return the list of events objects that match search
 
-    # example return
-    return {"query": query,
-            "result": [
-                {
-                    "event_id": "kjklj-897897-werjkl",
-                    "name": "greatest even eber lol",
-                    "date": 1679851845,
-                    "min_age": 19,
-                    "venue": "weteg-12323-sfsdfdsf",
-                    "host_id": "sdfsf3-234223434-sdfs"
-                },
-                {
-                    "event_id": "jkhklklj-234-dsfdfss",
-                    "name": "greatest even eber lol",
-                    "date": 1685136645,
-                    "min_age": 0,
-                    "venue": "wsdx-22421-fbxsb",
-                    "host_id": "sdfsf3-234223434-sdfs"
-                },
-                {
-                    "event_id": "jkhklkl-2343-sf",
-                    "name": "greatest even eber lol",
-                    "date": 1685136645,
-                    "min_age": 21,
-                    "venue": "sdfsf-234223434-ss",
-                    "host_id": "sdfsf3-234223434-sdfs"
-                }
-            ]}
+    return {
+        "query": query,
+        "result": Event.match_name(query)
+    }
 
 
 @app.get("/api/login/{email}/{password}")
@@ -104,7 +60,7 @@ def login(email: str, password: str):
     # query internal to verify login, return true/false based on internal method
 
     # example return
-    return {"success": True}
+    return {"success": User.login(email, password)}
 
 
 @app.get("/api/create_account/{email}/{password}/{first_name}/{last_name}/{phone}")
@@ -112,19 +68,20 @@ def create_account(email: str, password: str, first_name: str, last_name: str, p
     # query internal method to creating account, return true/false based on internal method
 
     # example return
-    return {"success": True}
+    return {"success": User.create_account(email, password, first_name, last_name, phone)}
 
 @app.get("/api/payment/{user_id}/{event_id}/{numOfTickets}/{card_num}/{card_cvv}/{card_name}/{card_expMonth}/{card_expYear}")
 def payment(user_id: str, event_id: str, numOfTickets: int, card_num: int, card_cvv: int, card_name: str, card_expMonth: int, card_expYear: int):
     # query internal payment method, return true/false based on internal method
 
-    # example return
-    return {"success": True}
+    return {"success": User.purchase_ticket(user_id, event_id, numOfTickets,
+                                            card_num, card_cvv, card_name, card_expMonth, card_expYear)}
 
 @app.get("/api/tickets/{user_id}")
 def order_history(user_id: str):
     # query internal method of ticket history for the user id, return the ticket list of the user
 
+    return User.get_ticket_history(user_id)
     # example return
     return {"user_id": user_id,
             "tickets": [

@@ -9,7 +9,7 @@ class Event:
     Event is the working representation of an event
     All fields are verified and ready to be used
     """
-    def __init__(self, event_id, name, description, date, venue, min_age, num_attendees):
+    def __init__(self, event_id, name, description, date, venue, min_age, num_attendees, price):
         self.event_id = event_id
         self.name = name
         self.description = description
@@ -17,6 +17,7 @@ class Event:
         self.venue = venue
         self.min_age = min_age
         self.num_attendees = num_attendees
+        self.price = price
 
     @classmethod
     def from_id(cls, event_id):
@@ -44,11 +45,19 @@ class Event:
             mem_date = datetime.strptime(db_event.date, '%m/%d/%Y')
             mem_min_age = int(db_event.min_age)
             mem_num_attendees = int(db_event.num_attendees)
+            mem_price = int(db_event.price)
         except ValueError:
             return None
 
         return Event(event_id, db_event.name, db_event.description,
-                     mem_date, mem_venue, mem_min_age, mem_num_attendees)
+                     mem_date, mem_venue, mem_min_age, mem_num_attendees, mem_price)
+
+    @classmethod
+    def match_name(cls, name):
+        matches = []
+        for match in event_csv.fuzzy_field_match(2, name):
+            matches.append(DB_Event.from_id(match[0]).to_dict())
+        return matches
 
     def to_db_event(self):
         """
@@ -57,7 +66,7 @@ class Event:
         """
         date_str = datetime.strftime(self.date, '%m/%d/%Y')
         return DB_Event([self.event_id, self.venue.venue_id, self.name, self.description,
-                         date_str, self.min_age, self.num_attendees])
+                         date_str, self.min_age, self.num_attendees, self.price])
 
     def update_event(self):
         """
@@ -111,6 +120,7 @@ class DB_Event:
         self.date = query[4]
         self.min_age = query[5]
         self.num_attendees = query[6]
+        self.price = query[7]
 
     @classmethod
     def from_id(cls, event_id):
@@ -142,4 +152,16 @@ class DB_Event:
         :return:
         """
         event_csv.write_entry_id_match(self.event_id, self.query)
+
+    def to_dict(self):
+        return {
+            "event_id": self.event_id,
+            "venue_id": self.venue_id,
+            "name": self.name,
+            "description": self.description,
+            "date": self.date,
+            "min_age": self.min_age,
+            "num_attendees": self.num_attendees,
+            "price": self.price
+        }
 

@@ -1,7 +1,11 @@
+import uuid
 from ticket import Ticket
 from csv_reader import csvReader
+from payment import Payment
+from event import Event
 
 user_csv = csvReader('DB/users.csv')
+
 
 class User:
     def __init__(self, user_id, first_name, last_name, email, phone_num, passhash, ticket_history):
@@ -21,6 +25,16 @@ class User:
         self.phone_num = phone_num
         self.passhash = passhash
         self.ticket_history = ticket_history
+
+    @classmethod
+    def create_account(cls, email, password, first_name, last_name, phone):
+        account = user_csv.find_field_match(3, email)
+        if account:
+            return False
+        account = User(str(uuid.uuid4()), first_name, last_name, email, phone, password, [])
+        account.update_user()
+        return True
+
 
     @classmethod
     def from_id(cls, user_id):
@@ -51,6 +65,54 @@ class User:
         return User(user_id, db_user.first_name, db_user.last_name,
                     db_user.email, db_user.phone_num, db_user.passhash,
                     mem_tickets)
+
+    @classmethod
+    def match_first_name(cls, name):
+        matches = []
+        for match in user_csv.fuzzy_field_match(1, name):
+            matches.append(DB_User.from_id(match[0]).to_dict_light())
+        return matches
+
+    @classmethod
+    def login(cls, email, in_pass):
+        account = user_csv.find_field_match(3, email)
+        if not account:
+            return False
+        if account[5] == in_pass:
+            return account[0]
+        return False
+
+    @classmethod
+    def purchase_ticket(cls, user_id, event_id, num_tick, card_num, card_cvv, card_name, card_expMonth, card_expYear):
+        card = Payment(card_num, card_name, card_expMonth, card_expYear, card_cvv)
+        if not card.card_Valid():
+            return False
+        user = User.from_id(user_id)
+        if not user:
+            return False
+        event = Event.from_id(event_id)
+        if not event:
+            return False
+        for i in range(num_tick):
+            newTick = Ticket(str(uuid.uuid4()), event, event.price)
+            user.ticket_history = [newTick] + user.ticket_history
+            event.num_attendees += 1
+
+            # Write changes to DB
+            newTick.update_ticket()
+            event.update_event()
+            user.update_user()
+        return True
+
+    @classmethod
+    def get_ticket_history(cls, user_id):
+        user = User.from_id(user_id)
+        if not user:
+            return []
+        tickets = []
+        for ticket in user.ticket_history:
+            tickets.append(ticket.to_db_ticket().to_dict())
+        return tickets
 
     def to_db_user(self):
         """
@@ -135,3 +197,18 @@ class DB_User:
         """
         user_csv.write_entry_id_match(self.user_id, self.query)
 
+    def to_dict_light(self):
+        return {
+            "user_id": self.user_id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email
+        }
+
+    def to_dict(self):
+        return {
+            "user_id": self.user_id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email
+        }

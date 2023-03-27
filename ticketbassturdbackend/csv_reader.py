@@ -1,4 +1,7 @@
 import csv
+from fuzzywuzzy import fuzz
+
+FUZZ_RATIO = 85
 
 class csvReader:
     def __init__(self, file):
@@ -14,6 +17,19 @@ class csvReader:
             if entry[0] == find_id:
                 return entry
         return None
+
+    def find_field_match(self, field, find_id):
+        for entry in self.get_all_entries():
+            if entry[field] == find_id:
+                return entry
+        return None
+
+    def fuzzy_field_match(self, field, match_term):
+        matches = []
+        for entry in self.get_all_entries():
+            if fuzz.partial_ratio(entry[field], match_term) >= FUZZ_RATIO:
+                matches.append(entry)
+        return matches
 
     def delete_id_match(self, del_id):
         all_entries = self.get_all_entries()

@@ -33,6 +33,13 @@ class Venue:
 
         return Venue(venue_id, db_venue.name, db_venue.description, db_venue.address, mem_max_capacity)
 
+    @classmethod
+    def match_name(cls, name):
+        matches = []
+        for match in venue_csv.fuzzy_field_match(1, name):
+            matches.append(DB_Venue.from_id(match[0]).to_dict())
+        return matches
+
     def to_db_venue(self):
         """
         Construct a DB_venue representation of this venue object
@@ -107,3 +114,11 @@ class DB_Venue:
         """
         venue_csv.write_entry_id_match(self.venue_id, self.query)
 
+    def to_dict(self):
+        return {
+            "venue_id": self.venue_id,
+            "name": self.name,
+            "description": self.description,
+            "address": self.address,
+            "max_capacity": self.max_capacity
+        }

@@ -1,5 +1,8 @@
 from venue import Venue
-import datetime
+from csv_reader import csvReader
+from datetime import datetime
+
+event_csv = csvReader('events.csv')
 
 class Event:
     """
@@ -36,11 +39,16 @@ class Event:
             return None
 
         # GENERATE EVENT OBJ ----------------------
+        # Make sure all arguments can be converted without errors
+        try:
+            mem_date = datetime.strptime(db_event.date, '%m/%d/%Y')
+            mem_min_age = int(db_event.min_age)
+            mem_num_attendees = int(db_event.num_attendees)
+        except ValueError:
+            return None
 
-        # TODO: LUCAS - parse date string into datetime representation
-        mem_date = db_event.date
         return Event(event_id, db_event.name, db_event.description,
-                     mem_date, mem_venue, db_event.min_age, db_event.num_attendees)
+                     mem_date, mem_venue, mem_min_age, mem_num_attendees)
 
     def date_valid(self, date):
         """
@@ -71,14 +79,13 @@ class DB_Event:
         :param query: query from which to procure entries
         """
         # TODO: Parse query
-        self.event_id = None
-        self.venue_id = None
-        self.event_id = None
-        self.name = None
-        self.description = None
-        self.date = None
-        self.min_age = None
-        self.num_attendees = None
+        self.event_id = query[0]
+        self.venue_id = query[1]
+        self.name = query[2]
+        self.description = query[3]
+        self.date = query[4]
+        self.min_age = query[5]
+        self.num_attendees = query[6]
 
     @classmethod
     def from_id(cls, event_id):
@@ -89,10 +96,13 @@ class DB_Event:
         :return:    DB_Event, if ID valid
                     None, if ID invalid
         """
-        #TODO: Check if ID exists in DB
-        id_valid = True
-        if not id_valid:
-            return None
-        # TODO: Get Query
-        query = ""
-        return DB_Event(query)
+        found_event = event_csv.id_match(event_id)
+        return DB_Event(found_event)
+
+    @classmethod
+    def delete_event(cls, event_id):
+        return True
+
+    def save_event(self):
+        return True
+

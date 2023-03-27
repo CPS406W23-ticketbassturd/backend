@@ -10,3 +10,4 @@ class Ticket:
 
     def date_valid(self, date):
         return self.event.date_valid(date)
+

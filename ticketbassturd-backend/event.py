@@ -42,13 +42,35 @@ class Event:
         # Make sure all arguments can be converted without errors
         try:
             mem_date = datetime.strptime(db_event.date, '%m/%d/%Y')
-            mem_min_age = int(db_event.min_age)
-            mem_num_attendees = int(db_event.num_attendees)
         except ValueError:
             return None
 
         return Event(event_id, db_event.name, db_event.description,
-                     mem_date, mem_venue, mem_min_age, mem_num_attendees)
+                     mem_date, mem_venue, db_event.min_age, db_event.num_attendees)
+
+    def to_db_event(self):
+        """
+        Construct a DB_Event representation of this Event object
+        :return: the DB_Event
+        """
+        date_str = datetime.strftime(self.date, '%m/%d/%Y')
+        return DB_Event([self.event_id, self.venue.venue_id, self.name, self.description,
+                         date_str, self.min_age, self.num_attendees])
+
+    def update_event(self):
+        """
+        Updates this event in the event CSV
+        :return:
+        """
+        db_event = self.to_db_event()
+        db_event.save_event()
+
+    def delete_event(self):
+        """
+        Deletes this event in the CSV
+        :return:
+        """
+        DB_Event.delete_event(self.event_id)
 
     def date_valid(self, date):
         """
@@ -66,6 +88,7 @@ class Event:
         """
         return self.num_attendees >= self.venue.max_capacity
 
+
 class DB_Event:
     """
     DB_Event is the Database representation of an event
@@ -78,7 +101,7 @@ class DB_Event:
 
         :param query: query from which to procure entries
         """
-        # TODO: Parse query
+        self.query = query
         self.event_id = query[0]
         self.venue_id = query[1]
         self.name = query[2]
@@ -96,13 +119,23 @@ class DB_Event:
         :return:    DB_Event, if ID valid
                     None, if ID invalid
         """
-        found_event = event_csv.id_match(event_id)
+        found_event = event_csv.find_id_match(event_id)
         return DB_Event(found_event)
 
     @classmethod
     def delete_event(cls, event_id):
-        return True
+        """
+        Deletes an event from the event CSV\
+
+        :param event_id: ID of event to delete
+        :return:
+        """
+        event_csv.delete_id_match(event_id)
 
     def save_event(self):
-        return True
+        """
+        Updates or appends event to CSV
+        :return:
+        """
+        event_csv.write_entry_id_match(self.event_id, self.query)
 

@@ -37,7 +37,7 @@ class Ticket:
         except ValueError:
             return None
 
-        return Ticket(ticket_id, db_ticket.event_id, mem_price)
+        return Ticket(ticket_id, mem_event, mem_price)
 
     def to_db_ticket(self):
         """

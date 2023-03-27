@@ -114,6 +114,20 @@ class User:
             tickets.append(ticket.to_db_ticket().to_dict())
         return tickets
 
+    @classmethod
+    def update_account_info(cls, user_id, email, password, first_name, last_name, phone):
+        account = User.from_id(user_id)
+        if not account:
+            return False
+        account.email = email
+        account.passhash = password
+        account.first_name = first_name
+        account.last_name = last_name
+        account.phone_num = phone
+        account.update_user()
+        return True
+
+
     def to_db_user(self):
         """
         Construct a DB_User representation of this User object
@@ -210,5 +224,7 @@ class DB_User:
             "user_id": self.user_id,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "email": self.email
+            "email": self.email,
+            "phone_num": self.phone_num,
+            "password": self.passhash
         }

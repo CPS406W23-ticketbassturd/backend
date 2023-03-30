@@ -212,6 +212,10 @@ class DB_User:
         user_csv.write_entry_id_match(self.user_id, self.query)
 
     def to_dict_light(self):
+        """
+        Converts userDB to light dictionary
+        :return:
+        """
         return {
             "user_id": self.user_id,
             "first_name": self.first_name,
@@ -220,6 +224,10 @@ class DB_User:
         }
 
     def to_dict(self):
+        """
+        Converts userDB to full dictionary
+        :return:
+        """
         return {
             "user_id": self.user_id,
             "first_name": self.first_name,

@@ -1,7 +1,7 @@
 import csv
 from fuzzywuzzy import fuzz
 
-FUZZ_RATIO = 85
+FUZZ_RATIO = 60
 
 class csvReader:
     def __init__(self, file):
@@ -27,7 +27,7 @@ class csvReader:
     def fuzzy_field_match(self, field, match_term):
         matches = []
         for entry in self.get_all_entries():
-            if fuzz.partial_ratio(entry[field], match_term) >= FUZZ_RATIO:
+            if fuzz.partial_ratio(entry[field].lower(), match_term.lower()) >= FUZZ_RATIO:
                 matches.append(entry)
         return matches
 

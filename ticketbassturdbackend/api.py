@@ -98,6 +98,7 @@ def get_user(user_id: str):
         return {"success": False}
     return {"success": True, "result": account.to_db_user().to_dict()}
 
+
 @app.get("/api/get/venue/{venue_id}")
 def get_user(venue_id: str):
     # query internal method to grab object and then return it
@@ -107,14 +108,17 @@ def get_user(venue_id: str):
         return {"success": False}
     return {"success": True, "result": ven.to_db_venue().to_dict()}
 
+
 @app.get("/api/get/event/{event_id}")
 def get_user(event_id: str):
     # query internal method to grab object and then return it
 
     eve = Event.from_id(event_id)
+    print(eve)
     if not eve:
         return {"success": False}
     return {"success": True, "result": eve.to_db_event().to_dict()}
+
 
 @app.get("/api/get/ticket/{ticket_id}")
 def get_user(ticket_id: str):

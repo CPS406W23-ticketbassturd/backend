@@ -1,3 +1,4 @@
+import uuid
 from venue import Venue
 from csv_reader import csvReader
 from datetime import datetime
@@ -18,6 +19,22 @@ class Event:
         self.min_age = min_age
         self.num_attendees = num_attendees
         self.price = price
+
+    @classmethod
+    def create_event(cls, name, description, date, venue_id, min_age, price):
+        event = event_csv.find_field_match(2, name)
+        if event:
+            return None
+        venue = Venue.from_id(venue_id)
+        if not venue:
+            return None
+        try:
+            mem_date = datetime.strptime(date, '%m-%d-%Y')
+        except ValueError:
+            return None
+        event = Event(str(uuid.uuid4()), name, description, mem_date, venue, min_age, 0, price)
+        event.update_event()
+        return event.event_id
 
     @classmethod
     def from_id(cls, event_id):
@@ -42,7 +59,7 @@ class Event:
         # GENERATE EVENT OBJ ----------------------
         # Make sure all arguments can be converted without errors
         try:
-            mem_date = datetime.strptime(db_event.date, '%m/%d/%Y')
+            mem_date = datetime.strptime(db_event.date, '%m-%d-%Y')
             mem_min_age = int(db_event.min_age)
             mem_num_attendees = int(db_event.num_attendees)
             mem_price = int(db_event.price)
@@ -64,7 +81,7 @@ class Event:
         Construct a DB_Event representation of this Event object
         :return: the DB_Event
         """
-        date_str = datetime.strftime(self.date, '%m/%d/%Y')
+        date_str = datetime.strftime(self.date, '%m-%d-%Y')
         return DB_Event([self.event_id, self.venue.venue_id, self.name, self.description,
                          date_str, self.min_age, self.num_attendees, self.price])
 

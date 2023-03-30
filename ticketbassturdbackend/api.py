@@ -130,8 +130,7 @@ def get_user(ticket_id: str):
 def create_event(name: str, description: str, date: str, venue_id: str, min_age: int, price: int):
     # activate internal method for creating event
 
-    # example return
-    return {
-        "success": True,
-        "event_id": "fifljksdjf-234234-ssdf"
-    }
+    eve = Event.create_event(name, description, date, venue_id, min_age, price)
+    return {"success": eve is not None,
+            "event_id": eve
+            }

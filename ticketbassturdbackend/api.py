@@ -126,3 +126,12 @@ def get_user(ticket_id: str):
     return {"success": True, "result": tick.to_db_ticket().to_dict()}
 
 
+@app.get("/api/create_event/{name}/{description}/{date}/{venue_id}/{min_age}/{price}")
+def create_event(name: str, description: str, date: str, venue_id: str, min_age: int, price: int):
+    # activate internal method for creating event
+
+    # example return
+    return {
+        "success": True,
+        "event_id": "fifljksdjf-234234-ssdf"
+    }

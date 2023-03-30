@@ -2,7 +2,8 @@
 
 To run the backend API:
 
-1. `pip install requirements.txt`
+1. `pip install requirements.txt`   
+2. `cd ticketbassturdbackend`
 2. `uvicorn api:app --reload`
 
 API will refresh as you save the `api.py` file due to `--reload` flag.

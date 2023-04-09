@@ -3,14 +3,14 @@ import random
 
 
 class Payment:
-    
+
     def __init__(self, cardNum, nameOnCard, expMonth, expYear, cvvNum):
         self.cardNum = cardNum
         self.nameOnCard = nameOnCard
         self.expMonth = expMonth
         self.expYear = expYear
         self.cvvNum = cvvNum
-    
+
     def card_Valid(self):
         if len(str(self.cardNum)) != 16 or not str(self.cardNum).isdigit() or not all(i.isalpha() for i in self.nameOnCard.split(" ")):
             print("1")
@@ -30,12 +30,13 @@ class Payment:
         def confirm_payment():
             x = random.random()
             if x < 0.2:
+                print('random chance of fail')
                 return False
             return True
-        if (confirm_payment()): 
-            #print("Thank You For Your Payment!")
+        if (confirm_payment()):
+            print("Thank You For Your Payment!")
             return True
-        else: 
-            #print("Card Declined!")
+        else:
+            print("Card Declined!")
             return False
-    
+

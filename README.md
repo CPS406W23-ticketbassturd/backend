@@ -1,5 +1,8 @@
 # backend
 
+Requirements:
+- Python 3.11 or newer
+
 To run the backend API:
 
 1. `pip install requirements.txt`   
